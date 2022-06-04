@@ -1,4 +1,5 @@
 import csv
+import os
 
 from requests import get
 from bs4 import BeautifulSoup
@@ -47,14 +48,14 @@ def get_html(url, headers, params=None):
     return get(url, headers=headers, params=params)
 
 
-def parse():
-    html = get_html(URL, HEADERS)
+def parse(url=URL):
+    html = get_html(url, HEADERS)
     if html.status_code == 200:
         cars = []
         pages_amount = get_pages_amount(html.content)
         for i in range(1, pages_amount + 1):
             print(f'Парсим {i} страницу из {pages_amount}...')
-            html = get_html(URL, HEADERS, params={'page': i})
+            html = get_html(url, HEADERS, params={'page': i})
             cars.extend(get_content(html.content))
         print(f'Получены данные по {len(cars)} авто.')
         return sorted(cars, key=lambda car: int(car['year']), reverse=True)
@@ -73,10 +74,11 @@ def save_to_file(data):
                 car['price'],
                 car['year']
             ])
+        os.startfile(PATH)
 
 
 def main():
-    data = parse()
+    data = parse(input('URL: ').strip())
     if len(data) > 0:
         save_to_file(data)
 
