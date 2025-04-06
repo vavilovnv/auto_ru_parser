@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+isort --profile black src
+
+mypy src
+flake8 src

@@ -1,0 +1,10 @@
+/shelf/
+/workspace.xml
+/httpRequests/
+/dataSources/
+/dataSources.local.xml
+.venv
+csv_files
+/.venv
+/csv_files
+.env
